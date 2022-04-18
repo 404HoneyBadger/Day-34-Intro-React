@@ -12,7 +12,7 @@ const Button = ({onClick,blah}) => ( // Event Handler variable referenced in 'Ap
   <button onClick={onClick}>{blah}</button>
 )
 
-const Content = ({textPrint, numOfClicks, percent}) => { //what prints out under the App component, why we need a whole ass seperate component from the 'Display' component I STILL DONT KNOW, its ok to use parameters that wont be used in every 'Display' return
+const Content = ({textPrint, numOfClicks, percent}) => { //what prints out under the App component, seperate component from the 'Display' component I STILL DONT KNOW, its ok to use parameters that wont be used in every 'Display' return
   return (
     <div>{textPrint} {numOfClicks} {percent} </div>
   )
@@ -29,7 +29,7 @@ const Display = ({displayClicks}) => {
     positiveText: 'Positive',
   }
 
-  const percent= '%' // create its own gd variable cause the return gets bitchy if I reference 'displayText.(whatever)' twice in the same line... eyeroll
+  const percent= '%' // create its own  variable cause the return gets rejects if I reference 'displayText.(whatever)' twice in the same line... 
 
   const total = (displayClicks.goodClick + displayClicks.neutralClick + displayClicks.badClick) // do the mathy math
 
@@ -49,7 +49,7 @@ const Display = ({displayClicks}) => {
 
       <Content textPrint={displayText.averageText} numOfClicks={constAverage} />
 
-      <Content textPrint={displayText.positiveText} numOfClicks={constPositive} percent={percent} /> {/* DO NOT REFERNCE THE SAME OBJECT TWICE IT WILL REJECT YOU LIKE THAT GIRL IN MIDDLE SCHOOL */}
+      <Content textPrint={displayText.positiveText} numOfClicks={constPositive} percent={percent} /> {/* DO NOT REFERNCE THE SAME OBJECT TWICE IT WILL REJECT  */}
     </div>
   )
 }
@@ -92,9 +92,9 @@ const App = () => {
       
       <Button onClick={handleBadClick} blah= {constText.badButton} />
       
-      <Header paramHeader= {constHeader.header2} />
+      <Header paramHeader= {constHeader.header2} /> 
       
-      <Display displayClicks={displayClicks} />
+      <Display displayClicks={displayClicks} /> {/* Entire component in displayClicks parameter */}
     </div>
   )
 }
