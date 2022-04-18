@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Header= ({paramHeader}) => {
+const Header= ({paramHeader}) => { // Simple enough
   return (
     <div>
     <h1> {paramHeader}</h1>
@@ -8,63 +8,66 @@ const Header= ({paramHeader}) => {
   )
 }
 
-const Button = ({onClick,blah}) => (
+const Button = ({onClick,blah}) => ( // Event Handler variable referenced in 'App'  and text
   <button onClick={onClick}>{blah}</button>
 )
 
-const Content = ({textPrint, numOfClicks}) => {
+const Content = ({textPrint, numOfClicks, percent}) => { //what prints out under the App component, why we need a whole ass seperate component from the 'Display' component I STILL DONT KNOW, its ok to use parameters that wont be used in every 'Display' return
   return (
-    <div>{textPrint} {numOfClicks}</div>
+    <div>{textPrint} {numOfClicks} {percent} </div>
   )
 }
 
 const Display = ({displayClicks}) => {
 
-  const displayText ={
-    goodText:'Good',
-    neutralText:'Neutral',
-    badisplayText:'Bad',
+  const displayText ={ //Create the text
+    goodDisplayText:'Good',
+    neutralDisplayText:'Neutral',
+    badDisplayText:'Bad',
     allText: 'All',
     averageText: 'Average',
     positiveText: 'Positive',
   }
-  const total = displayClicks.goodClick + displayClicks.neutralClick + displayClicks.badClick
 
-  const constAverage = (((displayClicks.goodClick * 1 + displayClicks.badClick * -1) / total).toFixed(3))
+  const percent= '%' // create its own gd variable cause the return gets bitchy if I reference 'displayText.(whatever)' twice in the same line... eyeroll
 
-  const constPositive = (displayClicks.goodClick * (100/total)).toFixed(3)
+  const total = (displayClicks.goodClick + displayClicks.neutralClick + displayClicks.badClick) // do the mathy math
 
-  return (
+  const constAverage = ((displayClicks.goodClick * 1 + displayClicks.badClick * -1) / total).toFixed(3) // more mathy math
+
+  const constPositive = ((displayClicks.goodClick * (100/total)).toFixed(3)) //math..
+
+  return ( // put it together for 'Content' component parameters
     <div>
-      <Content textPrint={displayText.goodText} numOfClicks={displayClicks.goodClick} />
+      <Content textPrint={displayText.goodDisplayText} numOfClicks={displayClicks.goodClick} />
 
-      <Content textPrint={displayText.neutralText} numOfClicks={displayClicks.neutralClick} />
+      <Content textPrint={displayText.neutralDisplayText} numOfClicks={displayClicks.neutralClick} />
 
-      <Content textPrint={displayText.badisplayText} numOfClicks={displayClicks.badClick} />
+      <Content textPrint={displayText.badDisplayText} numOfClicks={displayClicks.badClick} />
 
       <Content textPrint={displayText.allText} numOfClicks={total} />
 
       <Content textPrint={displayText.averageText} numOfClicks={constAverage} />
 
-      <Content textPrint={displayText.positiveText} numOfClicks={constPositive} />
+      <Content textPrint={displayText.positiveText} numOfClicks={constPositive} percent={percent} /> {/* DO NOT REFERNCE THE SAME OBJECT TWICE IT WILL REJECT YOU LIKE THAT GIRL IN MIDDLE SCHOOL */}
     </div>
   )
 }
 
 const App = () => {
   
-  const constHeader = {
+  const constHeader = { // Simple enough
     header1: 'Give Feedback',
     header2: 'Statistics'
   }
 
-  const [displayClicks, setClicks] = useState({
+  const [displayClicks, setClicks] = useState({ // when state is updated the component re-renders
     goodClick: 0,
     neutralClick: 0,
     badClick: 0
   })
- 
-  const constText= {
+
+  const constText= { // Haven't lost me yet
     goodButton: 'Good',
     neutralButton: 'Neutral',
     badButton: 'Bad'
